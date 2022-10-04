@@ -19,7 +19,7 @@
 
 - Bar chart/horizontal bar chart showing the country of residence/primary residence during employment and the number allowing remote work: 
 
-    ![alt text](https://github.com/kealvarez/project3/blob/main/images/barblotly.png?raw=true)
+    ![alt text](https://github.com/kealvarez/project3/blob/main/images/barplotly.png?raw=true)
 
 
 
