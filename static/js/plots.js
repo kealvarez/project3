@@ -1,3 +1,8 @@
-//d3.json("http://127.0.0.1:500/data").then(function(data) {
-    //console.log(data[0]);
-//});//
+var url = "https://raw.githubusercontent.com/kealvarez/project3/main/resources/FullTimeEmployeeData.csv"
+
+var dataset = [];
+
+d3.csv("https://raw.githubusercontent.com/kealvarez/project3/main/resources/FullTimeEmployeeData.csv", function(data) {
+    dataset=data;
+    console.log(dataset);
+});
