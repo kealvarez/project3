@@ -2,7 +2,7 @@ var url = "https://raw.githubusercontent.com/kealvarez/project3/main/resources/F
 
 var dataset = [];
 
-d3.csv("https://raw.githubusercontent.com/kealvarez/project3/main/resources/FullTimeEmployeeData.csv", function(data) {
-    dataset=data;
-    console.log(dataset);
-});
+
+d3.csv(url, function(data) {
+    console.log(data);
+})
