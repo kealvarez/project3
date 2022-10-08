@@ -11,7 +11,7 @@ d3.json(url, function (err, rows){
     var trace1 = {
         x: unpack(rows, 'id'),
         y: unpack(rows, 'salary_in_usd'),
-        z: unpack(rows, 'job_title'),
+        z: unpack(rows, 'remote_ratio'),
         marker: {
             size: 2,
             color: unpack(rows, 'salary_in_usd'),
@@ -34,3 +34,43 @@ d3.json(url, function (err, rows){
     }};
     Plotly.newPlot('Mydiv', data, layout, {showLink: false});
 });
+
+// // group by
+// const groupBy = (arr, key) => {
+//     const initialValue = {};
+//     return arr.reduce((acc, cval) => {
+//         const myAttribute = cval[key];
+//         acc[myAttribute] = [...(acc[myAttribute] || []), cval]
+//         return acc;
+//     }, initialValue);
+// };
+
+// const gj = groupBy(data[0], "job_title");
+// console.log("group by:", gj);
+
+// d3.json(url).then(({features}) => {
+//     features.forEach(feature => {
+//         let { jobtitle } = feature.job_title;
+//         console.log(jobtitle);
+//     })
+// });
+
+d3.json(url, function(err, rows) {
+    function unpack(rows, key) {
+        return rows.map(function(row) {return row[key]; });
+    }
+
+    var pieTrace1 = {
+        vals: unpack(rows, "salary_in_usd"),
+        labels: unpack(rows, "job_title"),
+        type: 'pie'
+    };
+    var pieData = [pieTrace1];
+    var pielayout = {
+        height: 1000,
+        width: 2000
+    };
+
+    Plotly.newPlot('Piediv', pieData, pielayout);
+    
+})
