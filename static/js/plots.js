@@ -74,3 +74,86 @@ d3.json(url, function(err, rows) {
     Plotly.newPlot('Piediv', pieData, pielayout);
     
 })
+
+// Drop down plots
+
+d3.json(url, function (err, rows) {
+    function unpack(rows, key) {
+        return rows.map(function (row) {
+            return row[key];
+        });
+        
+    }
+    
+    var allCountryNames = unpack(rows, 'country_name'),
+    allYears = unpack(rows, 'work_year'),
+    allJobs = unpack(rows, "job_title"),
+    allSalariesUSD = unpack(rows, "salary_in_usd"),
+    listofCountries = [],
+    currentCountry,
+    currentJobs = [],
+    currentSalariesUSD = [],
+    currentYear = [];
+
+    for (let i = 0; i < allCountryNames.length; i++) {
+        if (listofCountries.indexOf(allCountryNames[i]) === -1) {
+            listofCountries.push(allCountryNames[i]);
+        }
+        
+    }
+    function getCountryData(chosenCountry) {
+        currentJobs = [];
+        currentYear = [];
+        for (var i = 0; i < allCountryNames.length; i++) {
+            if ( allCountryNames[i] === chosenCountry) {
+                currentJobs.push(allJobs[i]);
+                currentYear.push(allYears[i]);
+                currentSalariesUSD.push(allSalariesUSD[i]);
+                
+            }
+            
+        }
+    };
+    // default country, set plot
+    // setplot
+    function setPiePlot(chosenCountry) {
+        getCountryData(chosenCountry);
+
+        var newTrace1 = {
+            values: currentSalariesUSD,
+            labels: currentJobs,
+            type: 'pie'
+        };
+
+        var newData = [newTrace1];
+
+        var newLayout = {
+            title: "Pie Chart",
+            height: 1000,
+            width: 900
+        };
+        Plotly.newPlot('Dropdiv', newData, newLayout);
+        
+    };
+
+    var innerContainer = document.querySelector('[data-num="0"'),
+    plotE1 = innerContainer.querySelector('.plot'),
+    countrySelector = innerContainer.querySelector('.countrydata');
+
+    function assignOptions(textArray, selector) {
+        for (var i = 0; i < textArray.length; i++) {
+            var currentOption = document.createElement('option');
+            currentOption.text = textArray[i];
+            selector.appendChild(currentOption);
+            
+        }
+    }
+
+    assignOptions(listofCountries, countrySelector);
+
+    function updateCountry() {
+        setPiePlot(countrySelector.value);
+    }
+
+    countrySelector.addEventListener('change', updateCountry, false);
+});
