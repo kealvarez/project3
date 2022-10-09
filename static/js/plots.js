@@ -55,25 +55,6 @@ d3.json(url, function (err, rows){
 //     })
 // });
 
-d3.json(url, function(err, rows) {
-    function unpack(rows, key) {
-        return rows.map(function(row) {return row[key]; });
-    }
-
-    var pieTrace1 = {
-        vals: unpack(rows, "salary_in_usd"),
-        labels: unpack(rows, "job_title"),
-        type: 'pie'
-    };
-    var pieData = [pieTrace1];
-    var pielayout = {
-        height: 1000,
-        width: 2000
-    };
-
-    Plotly.newPlot('Piediv', pieData, pielayout);
-    
-})
 
 // Drop down plots
 
@@ -132,12 +113,12 @@ d3.json(url, function (err, rows) {
             height: 1000,
             width: 900
         };
-        Plotly.newPlot('Dropdiv', newData, newLayout);
+        Plotly.newPlot('chartdiv', newData, newLayout);
         
     };
 
     var innerContainer = document.querySelector('[data-num="0"'),
-    plotE1 = innerContainer.querySelector('.Dropdiv'),
+    plotE1 = innerContainer.querySelector('.chart'),
     countrySelector = innerContainer.querySelector('.countrydata');
 
     function assignOptions(textArray, selector) {
