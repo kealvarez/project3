@@ -4,36 +4,36 @@ var data = d3.json(url, function(data) {
     console.log(data);
 });
 
-d3.json(url, function (err, rows){
-    function unpack(rows, key) {
-        return rows.map(function(row) { return row[key]; });
-    }
-    var trace1 = {
-        x: unpack(rows, 'id'),
-        y: unpack(rows, 'salary_in_usd'),
-        z: unpack(rows, 'remote_ratio'),
-        marker: {
-            size: 2,
-            color: unpack(rows, 'salary_in_usd'),
-            colorscale: 'Greens',
-            line: {color: 'transparent'}
-        },
-        mode: 'markers',
-        type: 'scatter3d',
-        text: unpack(rows, 'country_name'),
-        hoverinfo: 'x+y+z+text',
-        showlegend: false
+// d3.json(url, function (err, rows){
+//     function unpack(rows, key) {
+//         return rows.map(function(row) { return row[key]; });
+//     }
+//     var trace1 = {
+//         x: unpack(rows, 'id'),
+//         y: unpack(rows, 'salary_in_usd'),
+//         z: unpack(rows, 'remote_ratio'),
+//         marker: {
+//             size: 2,
+//             color: unpack(rows, 'salary_in_usd'),
+//             colorscale: 'Greens',
+//             line: {color: 'transparent'}
+//         },
+//         mode: 'markers',
+//         type: 'scatter3d',
+//         text: unpack(rows, 'country_name'),
+//         hoverinfo: 'x+y+z+text',
+//         showlegend: false
 
-    };
-    var data = [trace1];
-    var layout = {margin: {
-        l: 0,
-        r: 0,
-        b: 0,
-        t: 0
-    }};
-    Plotly.newPlot('Mydiv', data, layout, {showLink: false});
-});
+//     };
+//     var data = [trace1];
+//     var layout = {margin: {
+//         l: 0,
+//         r: 0,
+//         b: 0,
+//         t: 0
+//     }};
+//     Plotly.newPlot('Mydiv', data, layout, {showLink: false});
+// });
 
 // // group by
 // const groupBy = (arr, key) => {
@@ -96,7 +96,7 @@ d3.json(url, function (err, rows) {
         }
     };
     // default country, set plot
-    // setplot
+    setPiePlot('United States')
     function setPiePlot(chosenCountry) {
         getCountryData(chosenCountry);
 
@@ -138,3 +138,29 @@ d3.json(url, function (err, rows) {
 
     countrySelector.addEventListener('change', updateCountry, false);
 });
+
+// calc average
+
+// d3.json(url, function (err, rows) {
+//     function unpack(rows, key) {
+//         return rows.map(function (row) {
+//             return row[key];
+//         });
+        
+//     }
+
+//     function calcAvgArray(array) {
+//         var total = 0;
+//         var count = 0;
+
+//         array.array.forEach(function(item, index) {
+//             total += item;
+//             count++;
+//         });
+
+//         return total / count;
+//     }
+
+//     console.log(calcAvgArray(rows, 'salary_in_usd'));
+    
+// })
