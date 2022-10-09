@@ -137,7 +137,7 @@ d3.json(url, function (err, rows) {
     };
 
     var innerContainer = document.querySelector('[data-num="0"'),
-    plotE1 = innerContainer.querySelector('.plot'),
+    plotE1 = innerContainer.querySelector('.Dropdiv'),
     countrySelector = innerContainer.querySelector('.countrydata');
 
     function assignOptions(textArray, selector) {

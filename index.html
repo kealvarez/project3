@@ -11,7 +11,17 @@
 <body>
     <div id="Mydiv"> </div>
     <div id="Piediv"></div>
-    <div id="Dropdiv"></div>
+    <div class="PieDropSection" id="DropPie">
+        <div class="spacer --small"></div>
+        <div id="PieDrop">
+            <div class="PieChart" data-num="0">
+                <div class="chart" id="chartdiv"></div>
+                <div class="control-row">
+                    Country: <select class="countrydata"></select>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script src="./static/js/plots.js"></script>
     <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
