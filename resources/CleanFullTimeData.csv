@@ -1,3 +1,4 @@
+id,work_year,experience_level,employment_type,job_title,salary,salary_currency,salary_in_usd,employee_residence,remote_ratio,company_location,company_size,country_name
 0,2020,MI,FT,Data Scientist,70000,EUR,79833,DE,0,DE,L,Germany
 30,2020,MI,FT,Data Engineering Manager,51999,EUR,59303,DE,100,DE,S,Germany
 53,2020,EN,FT,Data Engineer,48000,EUR,54742,PK,100,DE,L,Germany
