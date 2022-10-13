@@ -5,10 +5,11 @@ from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.orm import Session
 from sqlalchemy import create_engine, func
 
-from flask import Flask, jsonify
+from flask import Flask, jsonify, render_template
 from flask_cors import CORS
 
 engine = create_engine("sqlite:///ds_salaries.sqlite")
+
 
 # reflect an existing database into a new model
 Base = automap_base()
@@ -17,6 +18,7 @@ Base.prepare(engine, reflect=True)
 
 # Save reference to the table
 salaries = Base.classes.salaries
+
 
 #################################################
 # Flask Setup
@@ -32,11 +34,7 @@ CORS(app)
 def welcome():
     """List all available api routes."""
     return (
-        f"Available Routes:<br/>"
-        f"/api/v1.0/all<br/>"
-        f"/api/v1.0/searchbyjobtitle/<job_title><br/>"
-        f"/api/v1.0/searchbysalaryinusd/<salary_in_usd><br/>"
-        f"/api/v1.0/searchbyremoteratio/<remote_ratio><br/>"
+        render_template("index.html")
     )
 
 
@@ -54,10 +52,18 @@ def view_all():
 @app.route("/api/v1.0/searchbyjobtitle/<job_title>")
 def search_by_job_title(job_title):
     session = Session(engine)
-    results = session.query(salaries).filter(salaries.job_title==job_title).all()
+    results = session.query(salaries).group_by(salaries.job_title==job_title).all()
     output = [{"job_title": x.job_title, "salary_in_usd": x.salary_in_usd} for x in results]
     session.close()
     return jsonify(output)
+
+# @app.route("/api/v1.0/searchbyjobtitle/<job_title>")
+# def search_by_job_title(job_title):
+#     session = Session(engine)
+#     results = session.query(salaries).filter(salaries.job_title==job_title).all()
+#     output = [{"job_title": x.job_title, "salary_in_usd": x.salary_in_usd} for x in results]
+#     session.close()
+#     return jsonify(output)
 
 
 @app.route("/api/v1.0/searchbysalaryinusd/<salary_in_usd>")
