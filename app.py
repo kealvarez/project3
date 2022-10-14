@@ -52,18 +52,10 @@ def view_all():
 @app.route("/api/v1.0/searchbyjobtitle/<job_title>")
 def search_by_job_title(job_title):
     session = Session(engine)
-    results = session.query(salaries).group_by(salaries.job_title==job_title).all()
+    results = session.query(salaries).filter(salaries.job_title==job_title).all()
     output = [{"job_title": x.job_title, "salary_in_usd": x.salary_in_usd} for x in results]
     session.close()
     return jsonify(output)
-
-# @app.route("/api/v1.0/searchbyjobtitle/<job_title>")
-# def search_by_job_title(job_title):
-#     session = Session(engine)
-#     results = session.query(salaries).filter(salaries.job_title==job_title).all()
-#     output = [{"job_title": x.job_title, "salary_in_usd": x.salary_in_usd} for x in results]
-#     session.close()
-#     return jsonify(output)
 
 
 @app.route("/api/v1.0/searchbysalaryinusd/<salary_in_usd>")
