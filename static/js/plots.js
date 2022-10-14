@@ -1,59 +1,59 @@
 var url = "http://127.0.0.1:5000/api/v1.0/all"
 
-var data = d3.json(url, function(data) {
-    console.log(data);
-});
-
-// d3.json(url, function (err, rows){
-//     function unpack(rows, key) {
-//         return rows.map(function(row) { return row[key]; });
-//     }
-//     var trace1 = {
-//         x: unpack(rows, 'id'),
-//         y: unpack(rows, 'salary_in_usd'),
-//         z: unpack(rows, 'remote_ratio'),
-//         marker: {
-//             size: 2,
-//             color: unpack(rows, 'salary_in_usd'),
-//             colorscale: 'Greens',
-//             line: {color: 'transparent'}
-//         },
-//         mode: 'markers',
-//         type: 'scatter3d',
-//         text: unpack(rows, 'country_name'),
-//         hoverinfo: 'x+y+z+text',
-//         showlegend: false
-
-//     };
-//     var data = [trace1];
-//     var layout = {margin: {
-//         l: 0,
-//         r: 0,
-//         b: 0,
-//         t: 0
-//     }};
-//     Plotly.newPlot('Mydiv', data, layout, {showLink: false});
+// var data = d3.json(url, function(data) {
+//     console.log(data);
 // });
 
-// // group by
-// const groupBy = (arr, key) => {
-//     const initialValue = {};
-//     return arr.reduce((acc, cval) => {
-//         const myAttribute = cval[key];
-//         acc[myAttribute] = [...(acc[myAttribute] || []), cval]
-//         return acc;
-//     }, initialValue);
-// };
-
-// const gj = groupBy(data[0], "job_title");
-// console.log("group by:", gj);
-
-// d3.json(url).then(({features}) => {
-//     features.forEach(feature => {
-//         let { jobtitle } = feature.job_title;
-//         console.log(jobtitle);
+// test function for groupby
+// function countryGroup(country) {
+//     let countrygroup = GroupBY(country_name, job_tile, 2)
+//     let countryJobs = Object.keys(countrygroup)
+//     let valuesCountry = []
+//     countryJobs.forEach(job => {
+//         let allJobs = countryGroup[job].map(req => req.salary_in_usd)
+//         let avgSalary = allJobs.reduce((a,b) => a + b, 0) / allJobs.length
+//         valuesCountry.push(Math.ceil(avgSalary))
 //     })
-// });
+
+//     let traceBar1 = {
+//         x: countryJobs,
+//         y: avgSalary,
+//         name: "test",
+//         type: "bar"
+//     }
+//     var data = [traceBar1];
+//     var layout = {barmode: 'group'};
+//     Plotly.newPlot('chartdiv1', data, layout);
+        
+// }
+
+
+
+
+
+
+// Groupby Function
+// function GroupBY(array, key, level) {
+//     if (level == 1) {
+//         return array.reduce((result, currentValue) => {
+//             (result[currentValue.attributes[key]] = result[currentValue.attributes[key]] || []).push(
+//                 currentValue.attributes
+//             );
+
+//             return result;
+
+//         }, {}); // empty object is the initial value for result objext
+//     } else {
+//         return array.reduce((result, currentValue) => {
+//             (result[currentValue[key]] = result[currentValue[key]] || []).push(
+//                 currentValue
+//             );
+//             return result;
+//         }, {});
+//     }
+// }
+
+
 
 
 // Drop down plots
@@ -74,6 +74,7 @@ d3.json(url, function (err, rows) {
     currentCountry,
     currentJobs = [],
     currentSalariesUSD = [],
+    currentAvgSalaries = [],
     currentYear = [];
 
     for (let i = 0; i < allCountryNames.length; i++) {
@@ -82,28 +83,43 @@ d3.json(url, function (err, rows) {
         }
         
     }
+
     function getCountryData(chosenCountry) {
         currentJobs = [];
         currentYear = [];
+
         for (var i = 0; i < allCountryNames.length; i++) {
             if ( allCountryNames[i] === chosenCountry) {
                 currentJobs.push(allJobs[i]);
                 currentYear.push(allYears[i]);
                 currentSalariesUSD.push(allSalariesUSD[i]);
+                // let avgSalary = currentSalariesUSD.reduce((a, b) => a + b, 0) / currentJobs.length
+                // currentAvgSalaries.push(Math.ceil(avgSalary))
                 
             }
+
+            let avgSalary = currentSalariesUSD.reduce((a, b) => a + b, 0) / currentJobs.length
+                currentAvgSalaries.push(Math.ceil(avgSalary));
+
             
         }
     };
+
+    // bar chart
+
+
+
+
+
     // default country, set plot
     setPiePlot('United States')
     function setPiePlot(chosenCountry) {
         getCountryData(chosenCountry);
 
         var newTrace1 = {
-            values: currentSalariesUSD,
-            labels: currentJobs,
-            type: 'pie'
+            y: currentAvgSalaries,
+            x: currentJobs,
+            type: 'bar'
         };
 
         var newData = [newTrace1];
