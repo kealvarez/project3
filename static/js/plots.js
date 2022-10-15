@@ -1,8 +1,18 @@
 var url = "http://127.0.0.1:5000/api/v1.0/all"
 
-// var data = d3.json(url, function(data) {
-//     console.log(data);
-// });
+var data = d3.json(url, function(data) {
+    console.log(data);
+    
+    
+});
+
+// d3.json("/api/v1.0/all").then(data => {
+//     for (let index = 0; index < data.length; index++) {
+//         const element = data[index];
+//         let country = element.country_name;
+//         console.log(country);    
+//     }
+// })
 
 // test function for groupby
 // function countryGroup(country) {
