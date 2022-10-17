@@ -412,3 +412,31 @@ function setBarChart(chosenJob) {
   
 // countrySelector.addEventListener('change', updateCountry, false);
 
+let pivot = new Flexmonster({
+  container: "pivot-container",
+  componentFolder: "https://cdn.flexmonster.com/",
+  width: "100%",
+  height: 500,
+  toolbar: true,
+  report: {
+    dataSource: {
+      filename: "https://raw.githubusercontent.com/kealvarez/project3/main/resources/CleanFullTimeData%20copy.csv"
+    },
+    slice: {
+      rows: [{
+        uniqueName: "job_title"
+      },
+      {
+        uniqueName: "[Measures]"
+      }
+    ],
+    columns: [{
+      uniqueName: "country_name"
+    }],
+    measures: [{
+      uniqueName: "salary_in_usd", aggregation: "average", format: "currency"
+    }
+  ]
+    }
+  }
+});
