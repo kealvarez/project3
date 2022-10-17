@@ -1,119 +1,127 @@
-var url = "http://127.0.0.1:5000/api/v1.0/all"
+const url = "http://127.0.0.1:5000/api/v1.0/all"
 
-var data = d3.json(url, function(data) {
-    console.log(data);
-    
-    
+const data = d3.json(url, function(data) {
+    console.log(data);    
 });
 
-// d3.json("/api/v1.0/all").then(data => {
-//     for (let index = 0; index < data.length; index++) {
-//         const element = data[index];
-//         let country = element.country_name;
-//         console.log(country);    
+const log = console.log
+
+const salaryData = Array.from(d3.json(url))
+// Groupby function
+const groupBy = (key,arr) => arr.reduce((cache, row) => ({ ... cache, [row[key]]: row[key] in cache ? cache[row[key]].concat(row) : [row] }), {})
+
+log(groupBy)
+
+log(groupBy('country_name', salaryData));
+
+// let countries = groupBy('country_name', salaryData);
+// let jobs = groupBy('job_title', salaryData);
+
+// var barData = [
+//     {
+//         x: 
 //     }
+// ]
+
+log(salaryData.country_name);
+
+// d3.json(url, function (data) {
+//     let countries = groupBy('country_name', data);
+//     let jobs = groupBy('job_title', data);
+//     log(jobs);
+//     log(countries);
+//     log(countries[0]);
+//     log(countries.job_title);
+
+//     var trace1 ={
+//         x: jobs[0],
+//         y: jobs.salary_in_usd[0],
+//         type: 'bar'
+//     };
+
+//     var data = [trace1];
+
+//     Plotly.newPlot('MyDiv', data);
+
+    
+
 // })
 
-// test function for groupby
-// function countryGroup(country) {
-//     let countrygroup = GroupBY(country_name, job_tile, 2)
-//     let countryJobs = Object.keys(countrygroup)
-//     let valuesCountry = []
-//     countryJobs.forEach(job => {
-//         let allJobs = countryGroup[job].map(req => req.salary_in_usd)
-//         let avgSalary = allJobs.reduce((a,b) => a + b, 0) / allJobs.length
-//         valuesCountry.push(Math.ceil(avgSalary))
-//     })
+d3.json(url, function(rows) {
+    rows.forEach(row => {
+        let { job } = row.job_title;
+        let { country } = row.country_name;
+        let { salary } = row.salary_in_usd;
 
-//     let traceBar1 = {
-//         x: countryJobs,
-//         y: avgSalary,
-//         name: "test",
-//         type: "bar"
-//     }
-//     var data = [traceBar1];
-//     var layout = {barmode: 'group'};
-//     Plotly.newPlot('chartdiv1', data, layout);
-        
-// }
+        var trace1 = {
+            x: job,
+            y: salary,
+            type: 'bar'
+        };
+
+        var data = [trace1];
+
+        Plotly.newPlot('MyDiv', data);
+
+
+    });
+})
 
 
 
 
-
-
-// Groupby Function
-// function GroupBY(array, key, level) {
-//     if (level == 1) {
-//         return array.reduce((result, currentValue) => {
-//             (result[currentValue.attributes[key]] = result[currentValue.attributes[key]] || []).push(
-//                 currentValue.attributes
-//             );
-
-//             return result;
-
-//         }, {}); // empty object is the initial value for result objext
-//     } else {
-//         return array.reduce((result, currentValue) => {
-//             (result[currentValue[key]] = result[currentValue[key]] || []).push(
-//                 currentValue
-//             );
-//             return result;
-//         }, {});
-//     }
-// }
 
 
 
 
 // Drop down plots
 
-d3.json(url, function (err, rows) {
-    function unpack(rows, key) {
-        return rows.map(function (row) {
-            return row[key];
-        });
+// d3.json(url, function (err, rows) {
+//     function unpack(rows, key) {
+//         return rows.map(function (row) {
+//             return row[key];
+//         });
         
-    }
+//     }
     
-    var allCountryNames = unpack(rows, 'country_name'),
-    allYears = unpack(rows, 'work_year'),
-    allJobs = unpack(rows, "job_title"),
-    allSalariesUSD = unpack(rows, "salary_in_usd"),
-    listofCountries = [],
-    currentCountry,
-    currentJobs = [],
-    currentSalariesUSD = [],
-    currentAvgSalaries = [],
-    currentYear = [];
+//     var allCountryNames = unpack(rows, 'country_name'),
+//     allYears = unpack(rows, 'work_year'),
+//     allJobs = unpack(rows, "job_title"),
+//     allSalariesUSD = unpack(rows, "salary_in_usd"),
+//     listofCountries = [],
+//     currentCountry,
+//     currentJobs = [],
+//     currentSalariesUSD = [],
+//     currentAvgSalaries = [],
+//     currentYear = [];
 
-    for (let i = 0; i < allCountryNames.length; i++) {
-        if (listofCountries.indexOf(allCountryNames[i]) === -1) {
-            listofCountries.push(allCountryNames[i]);
-        }
+//     for (let i = 0; i < allCountryNames.length; i++) {
+//         if (listofCountries.indexOf(allCountryNames[i]) === -1) {
+//             listofCountries.push(allCountryNames[i]);
+//         }
         
-    }
+//     }
 
-    function getCountryData(chosenCountry) {
-        currentJobs = [];
-        currentYear = [];
+//     function getCountryData(chosenCountry) {
+//         currentJobs = [];
+//         currentYear = [];
 
-        for (var i = 0; i < allCountryNames.length; i++) {
-            if ( allCountryNames[i] === chosenCountry) {
-                currentJobs.push(allJobs[i]);
-                currentYear.push(allYears[i]);
-                currentSalariesUSD.push(allSalariesUSD[i]);
-                // let avgSalary = currentSalariesUSD.reduce((a, b) => a + b, 0) / currentJobs.length
-                // currentAvgSalaries.push(Math.ceil(avgSalary))
+//         for (var i = 0; i < allCountryNames.length; i++) {
+//             if ( allCountryNames[i] === chosenCountry) {
+//                 currentJobs.push(allJobs[i]);
+//                 currentYear.push(allYears[i]);
+//                 currentSalariesUSD.push(allSalariesUSD[i]);
+//                 // let avgSalary = currentSalariesUSD.reduce((a, b) => a + b, 0) / currentJobs.length
+//                 // currentAvgSalaries.push(Math.ceil(avgSalary))
                 
-            }
+//             }
 
-            let avgSalary = currentSalariesUSD.reduce((a, b) => a + b, 0) / currentJobs.length
-                currentAvgSalaries.push(Math.ceil(avgSalary));
+//             let avgSalary = currentSalariesUSD.reduce((a, b) => a + b, 0) / currentJobs.length
+//                 currentAvgSalaries.push(Math.ceil(avgSalary));
 
             
-        }
-    };
+//         }
+//     };
 
     // bar chart
 
@@ -122,48 +130,48 @@ d3.json(url, function (err, rows) {
 
 
     // default country, set plot
-    setPiePlot('United States')
-    function setPiePlot(chosenCountry) {
-        getCountryData(chosenCountry);
+//     setPiePlot('United States')
+//     function setPiePlot(chosenCountry) {
+//         getCountryData(chosenCountry);
 
-        var newTrace1 = {
-            y: currentAvgSalaries,
-            x: currentJobs,
-            type: 'bar'
-        };
+//         var newTrace1 = {
+//             y: currentAvgSalaries,
+//             x: currentJobs,
+//             type: 'bar'
+//         };
 
-        var newData = [newTrace1];
+//         var newData = [newTrace1];
 
-        var newLayout = {
-            title: "Pie Chart",
-            height: 1000,
-            width: 900
-        };
-        Plotly.newPlot('chartdiv', newData, newLayout);
+//         var newLayout = {
+//             title: "Pie Chart",
+//             height: 1000,
+//             width: 900
+//         };
+//         Plotly.newPlot('chartdiv', newData, newLayout);
         
-    };
+//     };
 
-    var innerContainer = document.querySelector('[data-num="0"'),
-    plotE1 = innerContainer.querySelector('.chart'),
-    countrySelector = innerContainer.querySelector('.countrydata');
+//     var innerContainer = document.querySelector('[data-num="0"'),
+//     plotE1 = innerContainer.querySelector('.chart'),
+//     countrySelector = innerContainer.querySelector('.countrydata');
 
-    function assignOptions(textArray, selector) {
-        for (var i = 0; i < textArray.length; i++) {
-            var currentOption = document.createElement('option');
-            currentOption.text = textArray[i];
-            selector.appendChild(currentOption);
+//     function assignOptions(textArray, selector) {
+//         for (var i = 0; i < textArray.length; i++) {
+//             var currentOption = document.createElement('option');
+//             currentOption.text = textArray[i];
+//             selector.appendChild(currentOption);
             
-        }
-    }
+//         }
+//     }
 
-    assignOptions(listofCountries, countrySelector);
+//     assignOptions(listofCountries, countrySelector);
 
-    function updateCountry() {
-        setPiePlot(countrySelector.value);
-    }
+//     function updateCountry() {
+//         setPiePlot(countrySelector.value);
+//     }
 
-    countrySelector.addEventListener('change', updateCountry, false);
-});
+//     countrySelector.addEventListener('change', updateCountry, false);
+// });
 
 // calc average
 

@@ -1,0 +1,7 @@
+.grid-item {
+    float: left;
+    width: 80px;
+    height: 80px;
+    border: 1.5px hsla(0, 0%, 0%, 0.5);
+}
+
