@@ -323,7 +323,7 @@ function setScatterPlot(chosenJob) {
     var data = [trace1];
 
     var layout = {
-      title: 'Salaries per cap according to JobTite<br>'+ chosenJob + ' Salary'
+      title: 'Salaries by JobTite<br>'+ chosenJob + ' Salary'
     };
 
     Plotly.newPlot('plotdiv', data, layout, {showSendToCloud: true});
@@ -345,6 +345,7 @@ assignOptions(listofJobtitles, jobSelector);
 
 function updateJobTitle(){
     setScatterPlot(jobSelector.value);
+    setBarChart(jobSelector.value);
 }
   
 jobSelector.addEventListener('change', updateJobTitle, false);
