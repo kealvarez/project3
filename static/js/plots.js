@@ -360,8 +360,12 @@ function setBarChart(chosenJob) {
     };
     
     var data3 = [trace3];
+
+    var layout = {
+      title: 'Remote Ratio by Job Title<br>'+ chosenJob + ' Remote Ratio'
+    };
     
-    Plotly.newPlot('myDiv', data3);
+    Plotly.newPlot('myDiv', data3, layout);
     
 }
 });

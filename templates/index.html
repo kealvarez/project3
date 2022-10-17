@@ -4,26 +4,30 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Data Analyst Salaries</title>
     <link rel="stylesheet" type="text/css"  href="static/css/stylesheet.css">
     <script src="https://cdn.plot.ly/plotly-2.14.0.min.js"></script>
     <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
     <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
 </head>
 <body>
+  <div class="header">
+    <h1>Data Analyst Salaries</h1>
+    <p>A look at salaries across varying job titles of data professionals, with a bit more.</p>
+    <p>To begin, select a job title below.</p>
+  </div>
 
 
-
-    <div class="showcase__section" id="bubble">
+    <div class="grid" id="bubble">
         <div class="spacer --small"></div>
         <div id="bubbleplots">
           <div class="bubbleplot" data-num="0">
-            <div class="plot" id="plotdiv"></div>
-            <div class="plot" id="myDiv"></div>
             <div class="control-row">
               Job Title: <select class="jobdata">
               </select>
             </div>
+            <div class="plot" id="plotdiv"></div>
+            <div class="plot" id="myDiv"></div>
           </div>
         </div>
       </div>
