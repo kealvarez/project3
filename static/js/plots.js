@@ -420,7 +420,7 @@ let pivot = new Flexmonster({
   toolbar: true,
   report: {
     dataSource: {
-      filename: "https://raw.githubusercontent.com/kealvarez/project3/main/resources/CleanFullTimeData%20copy.csv"
+      filename: "https://raw.githubusercontent.com/kealvarez/project3/main/resources/DataScience_DataAnalysist.csv"
     },
     slice: {
       rows: [{
@@ -431,10 +431,10 @@ let pivot = new Flexmonster({
       }
     ],
     columns: [{
-      uniqueName: "country_name"
+      uniqueName: "country_name",
     }],
     measures: [{
-      uniqueName: "salary_in_usd", aggregation: "average", format: "currency"
+      uniqueName: "salary", aggregate: "average", format: "currency"
     }
   ]
     }
