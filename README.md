@@ -9,17 +9,17 @@
 - It will be interesting to see what job title has the highest salary and where in the world might be the best place to be a data scientist. 
 
 ### Ideas for visualizations: 
-- Pie chart by experience of the indivdual for each Job Title: 
+- Scatter Plot showing salaries by job title: 
 
-    ![alt text](https://github.com/kealvarez/project3/blob/main/images/pieplotly.png?raw=true)
+    ![alt text](https://github.com/kealvarez/project3/blob/main/images/analystsalary.png?raw=true)
 
-- Map showing where the company's are located: 
+- Bar chart showing remote ration by job title: 
 
-    ![alt text](https://github.com/kealvarez/project3/blob/main/images/map.PNG?raw=true)
+    ![alt text](https://github.com/kealvarez/project3/blob/main/images/remoteratio.png?raw=true)
 
-- Bar chart/horizontal bar chart showing the country of residence/primary residence during employment and the number allowing remote work: 
+- A vizualization using a new JavaScript library, Flexmonster: 
 
-    ![alt text](https://github.com/kealvarez/project3/blob/main/images/barplotly.png?raw=true)
+    ![alt text](https://github.com/kealvarez/project3/blob/main/images/flexmonster.png?raw=true)
 
 
 

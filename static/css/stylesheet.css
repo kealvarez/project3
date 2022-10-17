@@ -5,6 +5,9 @@
     padding: 5px;
 }
 
-.plot .p{
+.footer{
     text-align: center;
+    color: darkblue;
+    background-color: lightgray;
+    padding: 5px;
 }
