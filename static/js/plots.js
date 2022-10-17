@@ -10,6 +10,10 @@ const salaryData = Array.from(d3.json(url))
 // Groupby function
 const groupBy = (key,arr) => arr.reduce((cache, row) => ({ ... cache, [row[key]]: row[key] in cache ? cache[row[key]].concat(row) : [row] }), {})
 
+// const unpack = (rows, key) => {
+//     return rows.map(function (row) {
+//         return row[key];
+
 log(groupBy)
 
 log(groupBy('country_name', salaryData));
@@ -25,51 +29,41 @@ log(groupBy('country_name', salaryData));
 
 log(salaryData.country_name);
 
-// d3.json(url, function (data) {
-//     let countries = groupBy('country_name', data);
-//     let jobs = groupBy('job_title', data);
-//     log(jobs);
-//     log(countries);
-//     log(countries[0]);
-//     log(countries.job_title);
+d3.json(url, function (data) {
+    let countryGroups = groupBy('country_name', data);
+    let countryKeys = Object.keys(countryGroups)
+    // barTraces = []
+    let jobGroups = groupBy('job_title', data);
+    let jobKeys = Object.keys(jobGroups);
+    // let salaries = []
 
-//     var trace1 ={
-//         x: jobs[0],
-//         y: jobs.salary_in_usd[0],
-//         type: 'bar'
-//     };
+    // countryKeys.forEach(country => salaries.push(countryGroups[country].length))
 
-//     var data = [trace1];
+    log(countryGroups);
+    log(countryKeys);
+    log(jobGroups);
+    log(jobKeys);
+    // log(salaries);
 
-//     Plotly.newPlot('MyDiv', data);
+    // salaries.push(countryGroups.map(row=>row.salary_in_usd))
 
-    
-
-// })
-
-d3.json(url, function(rows) {
-    rows.forEach(row => {
-        let { job } = row.job_title;
-        let { country } = row.country_name;
-        let { salary } = row.salary_in_usd;
-
-        var trace1 = {
-            x: job,
-            y: salary,
-            type: 'bar'
-        };
-
-        var data = [trace1];
-
-        Plotly.newPlot('MyDiv', data);
-
-
-    });
 })
 
 
+// d3.json(url, function (err, rows) {
+//     function unpack(rows, key) {
+//         return rows.map(function (row) {
+//             return row[key];
 
 
+//         });
+//     }
+
+//     let salaries = unpack(rows, "salary_in_usd")
+//     log(salaries);
+
+
+// })
 
 
 
@@ -123,13 +117,11 @@ d3.json(url, function(rows) {
 //         }
 //     };
 
-    // bar chart
 
 
 
 
 
-    // default country, set plot
 //     setPiePlot('United States')
 //     function setPiePlot(chosenCountry) {
 //         getCountryData(chosenCountry);
@@ -198,3 +190,220 @@ d3.json(url, function(rows) {
 //     console.log(calcAvgArray(rows, 'salary_in_usd'));
     
 // })
+
+
+d3.json(url, function(err, rows){
+
+    function unpack(rows, key) {
+        return rows.map(function(row) { return row[key]; });
+    }    
+var allCountryNames = unpack(rows, 'country_name'),
+    allYear = unpack(rows, 'work_year'),
+    allSalaries = unpack(rows, 'salary_in_usd'),
+    allJobs = unpack(rows, 'job_title'),
+    allIDs = unpack(rows, 'id'),
+    allRemote = unpack(rows, 'remote_ratio')
+    listofCountries = [],
+    listofJobtitles = [],
+    // currentJobtitle,
+    // currentCountry,
+    currentSalaries = [],
+    currentID = [],
+    currentRemote = [],
+    currentYear = [];
+
+
+
+
+  for (var i = 0; i < allCountryNames.length; i++ ){
+    if (listofCountries.indexOf(allCountryNames[i]) === -1 ){
+      listofCountries.push(allCountryNames[i]);
+    }
+  }
+
+  for (var i = 0; i < allJobs.length; i++ ){
+    if (listofJobtitles.indexOf(allJobs[i]) === -1){
+        listofJobtitles.push(allJobs[i]);
+    }
+  }
+  
+  function getCountryData(chosenCountry) {
+    currentSalaries = [];
+    currentYear = [];
+    currentID = [];
+    for (var i = 0 ; i < allCountryNames.length ; i++){
+      if ( allCountryNames[i] === chosenCountry ) {
+        currentSalaries.push(allSalaries[i]);
+        currentYear.push(allYear[i]);
+        currentID.push(allIDs[i]);
+      } 
+    }
+  };
+
+  function getJobData(chosenJob) {
+    currentSalaries = [];
+    currentYear = [];
+    currentID = [];
+    currentRemote = [];
+    for (var i = 0 ; i < allJobs.length ; i++){
+        if ( allJobs[i] === chosenJob ) {
+            currentSalaries.push(allSalaries[i]);
+            currentYear.push(allYear[i]);
+            currentID.push(allIDs[i]);
+            currentRemote.push(allRemote[i]);
+        }
+    }
+  };
+
+//   const street = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+//     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+// });
+// //creating a global variable for my map
+// let myMap = L.map("map", {
+//     center: [0,-40],
+//     zoom: 4,
+//     layers: [street]
+// });
+  
+// function setBubblePlot(chosenCountry) {
+//     getCountryData(chosenCountry);  
+
+//     var trace1 = {
+//       x: currentYear,
+//       y: currentSalaries,
+//       mode: 'lines+markers',
+//       marker: {
+//         size: 12, 
+//         opacity: 0.5
+//       }
+//     };
+
+//     var data = [trace1];
+
+//     var layout = {
+//       title: 'Salaries per cap according to Country<br>'+ chosenCountry + ' Salary'
+//     };
+
+//     Plotly.newPlot('plotdiv', data, layout, {showSendToCloud: true});
+// };
+  
+// var innerContainer = document.querySelector('[data-num="0"'),
+//     plotEl = innerContainer.querySelector('.plot'),
+//     countrySelector = innerContainer.querySelector('.countrydata');
+
+// function assignOptions(textArray, selector) {
+//   for (var i = 0; i < textArray.length;  i++) {
+//       var currentOption = document.createElement('option');
+//       currentOption.text = textArray[i];
+//       selector.appendChild(currentOption);
+//   }
+// }
+
+// assignOptions(listofCountries, countrySelector);
+
+// function updateCountry(){
+//     setBubblePlot(countrySelector.value);
+// }
+  
+// countrySelector.addEventListener('change', updateCountry, false);
+
+// Scatter Plot
+
+function setScatterPlot(chosenJob) {
+    getJobData(chosenJob);  
+
+    var trace1 = {
+      x: currentID,
+      y: currentSalaries,
+      type: 'scatter',
+      mode: "markers"
+      
+    };
+
+    var data = [trace1];
+
+    var layout = {
+      title: 'Salaries per cap according to JobTite<br>'+ chosenJob + ' Salary'
+    };
+
+    Plotly.newPlot('plotdiv', data, layout, {showSendToCloud: true});
+};
+  
+var innerContainer = document.querySelector('[data-num="0"'),
+    plotEl = innerContainer.querySelector('.plot'),
+    jobSelector = innerContainer.querySelector('.jobdata');
+
+function assignOptions(textArray, selector) {
+  for (var i = 0; i < textArray.length;  i++) {
+      var currentOption = document.createElement('option');
+      currentOption.text = textArray[i];
+      selector.appendChild(currentOption);
+  }
+}
+
+assignOptions(listofJobtitles, jobSelector);
+
+function updateJobTitle(){
+    setScatterPlot(jobSelector.value);
+}
+  
+jobSelector.addEventListener('change', updateJobTitle, false);
+
+function setBarChart(chosenJob) {
+    getJobData(chosenJob);
+
+    var trace3 = {
+        x: currentID,
+        y: currentRemote,
+        type: 'bar'
+    };
+    
+    var data3 = [trace3];
+    
+    Plotly.newPlot('myDiv', data3);
+    
+}
+});
+
+// function setBubblePlot(chosenCountry) {
+//     getCountryData(chosenCountry);  
+
+//     var trace1 = {
+//       x: currentYear,
+//       y: currentSalaries,
+//       mode: 'lines+markers',
+//       marker: {
+//         size: 12, 
+//         opacity: 0.5
+//       }
+//     };
+
+//     var data = [trace1];
+
+//     var layout = {
+//       title: 'Salaries per cap according to Country<br>'+ chosenCountry + ' Salary'
+//     };
+
+//     Plotly.newPlot('plotdiv', data, layout, {showSendToCloud: true});
+// };
+  
+// var innerContainer = document.querySelector('[data-num="0"'),
+//     plotEl = innerContainer.querySelector('.plot'),
+//     countrySelector = innerContainer.querySelector('.countrydata');
+
+// function assignOptions(textArray, selector) {
+//   for (var i = 0; i < textArray.length;  i++) {
+//       var currentOption = document.createElement('option');
+//       currentOption.text = textArray[i];
+//       selector.appendChild(currentOption);
+//   }
+// }
+
+// assignOptions(listofCountries, countrySelector);
+
+// function updateCountry(){
+//     setBubblePlot(countrySelector.value);
+// }
+  
+// countrySelector.addEventListener('change', updateCountry, false);
+

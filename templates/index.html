@@ -11,12 +11,38 @@
     <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
 </head>
 <body>
-    <div id="MyDiv"></div>
 
-    <div class="grid" data-masonry='{ "itemSelector": ".grid-item", "columnWidth": 200 }'>
-        <div class="grid-item"></div>
-        ...
+
+
+    <div class="showcase__section" id="bubble">
+        <div class="spacer --small"></div>
+        <div id="bubbleplots">
+          <div class="bubbleplot" data-num="0">
+            <div class="plot" id="plotdiv"></div>
+            <div class="plot" id="myDiv"></div>
+            <div class="control-row">
+              Job Title: <select class="jobdata">
+              </select>
+            </div>
+          </div>
+        </div>
       </div>
+
+      <!-- <div class="grid-item" id="scatter">
+        <div class="spacer --small"></div>
+        <div id="scatterplots">
+            <div class="scatterplot" data-num="0">
+                <div class="plot" id="plotdiv2"></div>
+                <div class="control-row">
+                    Job Title: <select class="jobdata">
+                    </select>
+                </div>
+            </div>
+        </div>
+
+      </div> -->
+
+
 
 
 
