@@ -46,46 +46,30 @@ def view_all():
     return jsonify(output)
 
 
-# @app.route("/api/v1.0/groups")
-# def view_groups():
-#     session = Session(engine)
-#     results = session.query(salaries.job_title, func.sum(salaries.salary_in_usd) / func.length(salaries.job_title)).all()
-#     output = [{"job_title": x.job_title} for x in results]
-#     session.close()
-#     return jsonify(output)
-# @app.route("/api/v1.0/all")
-# def view_summary():
-#     session = Session(engine)
-#     results = session.query(summary).all()
-#     output = [{"work_year": x.work_year, "country_name": x.country_name, "job_title": x.job_title, "experience_level": x.experience_level, "salary": x.salary, "remote_ratio": x.remote_ratio} for x in results]
-#     session.close()
-#     return jsonify(output)
+@app.route("/api/v1.0/searchbyjobtitle/<job_title>")
+def search_by_job_title(job_title):
+    session = Session(engine)
+    results = session.query(salaries).filter(salaries.job_title==job_title).all()
+    output = [{"job_title": x.job_title, "salary_in_usd": x.salary_in_usd} for x in results]
+    session.close()
+    return jsonify(output)
 
 
-# @app.route("/api/v1.0/searchbyjobtitle/<job_title>")
-# def search_by_job_title(job_title):
-#     session = Session(engine)
-#     results = session.query(salaries).filter(salaries.job_title==job_title).all()
-#     output = [{"job_title": x.job_title, "salary_in_usd": x.salary_in_usd} for x in results]
-#     session.close()
-#     return jsonify(output)
+@app.route("/api/v1.0/searchbysalaryinusd/<salary_in_usd>")
+def search_by_salary_in_usd(salary_in_usd):
+    session = Session(engine)
+    results = session.query(salaries).filter(salaries.salary_in_usd==salary_in_usd).all()
+    output = [{"job_title": x.job_title, "salary_in_usd": x.salary_in_usd} for x in results]
+    session.close()
+    return jsonify(output)
 
-
-# @app.route("/api/v1.0/searchbysalaryinusd/<salary_in_usd>")
-# def search_by_salary_in_usd(salary_in_usd):
-#     session = Session(engine)
-#     results = session.query(salaries).filter(salaries.salary_in_usd==salary_in_usd).all()
-#     output = [{"job_title": x.job_title, "salary_in_usd": x.salary_in_usd} for x in results]
-#     session.close()
-#     return jsonify(output)
-
-# @app.route("/api/v1.0/searchbyremoteratio/<remote_ratio>")
-# def search_by_remote_ratio(remote_ratio):
-#     session = Session(engine)
-#     results = session.query(salaries).filter(salaries.remote_ratio==remote_ratio).all()
-#     output = [{"job_title": x.job_title, "remote_ratio": x.remote_ratio} for x in results]
-#     session.close()
-#     return jsonify(output)
+@app.route("/api/v1.0/searchbyremoteratio/<remote_ratio>")
+def search_by_remote_ratio(remote_ratio):
+    session = Session(engine)
+    results = session.query(salaries).filter(salaries.remote_ratio==remote_ratio).all()
+    output = [{"job_title": x.job_title, "remote_ratio": x.remote_ratio} for x in results]
+    session.close()
+    return jsonify(output)
 
 
 if __name__ == '__main__':
