@@ -6,17 +6,19 @@ const data = d3.json(url, function(data) {
 
 const log = console.log
 
-const salaryData = Array.from(d3.json(url))
+// WE WANTED TO KEEP THIS GROUP BY Function - it took us forever to figure out. 
+
+//const salaryData = Array.from(d3.json(url))
 // Groupby function
-const groupBy = (key,arr) => arr.reduce((cache, row) => ({ ... cache, [row[key]]: row[key] in cache ? cache[row[key]].concat(row) : [row] }), {})
+// const groupBy = (key,arr) => arr.reduce((cache, row) => ({ ... cache, [row[key]]: row[key] in cache ? cache[row[key]].concat(row) : [row] }), {})
 
 // const unpack = (rows, key) => {
 //     return rows.map(function (row) {
 //         return row[key];
 
-log(groupBy)
+// log(groupBy)
 
-log(groupBy('country_name', salaryData));
+// log(groupBy('country_name', salaryData));
 
 // let countries = groupBy('country_name', salaryData);
 // let jobs = groupBy('job_title', salaryData);
@@ -27,169 +29,29 @@ log(groupBy('country_name', salaryData));
 //     }
 // ]
 
-log(salaryData.country_name);
+// log(salaryData.country_name);
 
-d3.json(url, function (data) {
-    let countryGroups = groupBy('country_name', data);
-    let countryKeys = Object.keys(countryGroups)
+// d3.json(url, function (data) {
+    // let countryGroups = groupBy('country_name', data);
+    // let countryKeys = Object.keys(countryGroups)
     // barTraces = []
-    let jobGroups = groupBy('job_title', data);
-    let jobKeys = Object.keys(jobGroups);
+    // let jobGroups = groupBy('job_title', data);
+    // let jobKeys = Object.keys(jobGroups);
     // let salaries = []
 
     // countryKeys.forEach(country => salaries.push(countryGroups[country].length))
 
-    log(countryGroups);
-    log(countryKeys);
-    log(jobGroups);
-    log(jobKeys);
+    // log(countryGroups);
+    // log(countryKeys);
+    // log(jobGroups);
+    // log(jobKeys);
     // log(salaries);
 
     // salaries.push(countryGroups.map(row=>row.salary_in_usd))
 
-})
-
-
-// d3.json(url, function (err, rows) {
-//     function unpack(rows, key) {
-//         return rows.map(function (row) {
-//             return row[key];
-
-
-//         });
-//     }
-
-//     let salaries = unpack(rows, "salary_in_usd")
-//     log(salaries);
-
-
 // })
 
 
-
-
-// Drop down plots
-
-// d3.json(url, function (err, rows) {
-//     function unpack(rows, key) {
-//         return rows.map(function (row) {
-//             return row[key];
-//         });
-        
-//     }
-    
-//     var allCountryNames = unpack(rows, 'country_name'),
-//     allYears = unpack(rows, 'work_year'),
-//     allJobs = unpack(rows, "job_title"),
-//     allSalariesUSD = unpack(rows, "salary_in_usd"),
-//     listofCountries = [],
-//     currentCountry,
-//     currentJobs = [],
-//     currentSalariesUSD = [],
-//     currentAvgSalaries = [],
-//     currentYear = [];
-
-//     for (let i = 0; i < allCountryNames.length; i++) {
-//         if (listofCountries.indexOf(allCountryNames[i]) === -1) {
-//             listofCountries.push(allCountryNames[i]);
-//         }
-        
-//     }
-
-//     function getCountryData(chosenCountry) {
-//         currentJobs = [];
-//         currentYear = [];
-
-//         for (var i = 0; i < allCountryNames.length; i++) {
-//             if ( allCountryNames[i] === chosenCountry) {
-//                 currentJobs.push(allJobs[i]);
-//                 currentYear.push(allYears[i]);
-//                 currentSalariesUSD.push(allSalariesUSD[i]);
-//                 // let avgSalary = currentSalariesUSD.reduce((a, b) => a + b, 0) / currentJobs.length
-//                 // currentAvgSalaries.push(Math.ceil(avgSalary))
-                
-//             }
-
-//             let avgSalary = currentSalariesUSD.reduce((a, b) => a + b, 0) / currentJobs.length
-//                 currentAvgSalaries.push(Math.ceil(avgSalary));
-
-            
-//         }
-//     };
-
-
-
-
-
-
-//     setPiePlot('United States')
-//     function setPiePlot(chosenCountry) {
-//         getCountryData(chosenCountry);
-
-//         var newTrace1 = {
-//             y: currentAvgSalaries,
-//             x: currentJobs,
-//             type: 'bar'
-//         };
-
-//         var newData = [newTrace1];
-
-//         var newLayout = {
-//             title: "Pie Chart",
-//             height: 1000,
-//             width: 900
-//         };
-//         Plotly.newPlot('chartdiv', newData, newLayout);
-        
-//     };
-
-//     var innerContainer = document.querySelector('[data-num="0"'),
-//     plotE1 = innerContainer.querySelector('.chart'),
-//     countrySelector = innerContainer.querySelector('.countrydata');
-
-//     function assignOptions(textArray, selector) {
-//         for (var i = 0; i < textArray.length; i++) {
-//             var currentOption = document.createElement('option');
-//             currentOption.text = textArray[i];
-//             selector.appendChild(currentOption);
-            
-//         }
-//     }
-
-//     assignOptions(listofCountries, countrySelector);
-
-//     function updateCountry() {
-//         setPiePlot(countrySelector.value);
-//     }
-
-//     countrySelector.addEventListener('change', updateCountry, false);
-// });
-
-// calc average
-
-// d3.json(url, function (err, rows) {
-//     function unpack(rows, key) {
-//         return rows.map(function (row) {
-//             return row[key];
-//         });
-        
-//     }
-
-//     function calcAvgArray(array) {
-//         var total = 0;
-//         var count = 0;
-
-//         array.array.forEach(function(item, index) {
-//             total += item;
-//             count++;
-//         });
-
-//         return total / count;
-//     }
-
-//     console.log(calcAvgArray(rows, 'salary_in_usd'));
-    
-// })
 
 
 d3.json(url, function(err, rows){
@@ -255,60 +117,6 @@ var allCountryNames = unpack(rows, 'country_name'),
     }
   };
 
-//   const street = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-//     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-// });
-// //creating a global variable for my map
-// let myMap = L.map("map", {
-//     center: [0,-40],
-//     zoom: 4,
-//     layers: [street]
-// });
-  
-// function setBubblePlot(chosenCountry) {
-//     getCountryData(chosenCountry);  
-
-//     var trace1 = {
-//       x: currentYear,
-//       y: currentSalaries,
-//       mode: 'lines+markers',
-//       marker: {
-//         size: 12, 
-//         opacity: 0.5
-//       }
-//     };
-
-//     var data = [trace1];
-
-//     var layout = {
-//       title: 'Salaries per cap according to Country<br>'+ chosenCountry + ' Salary'
-//     };
-
-//     Plotly.newPlot('plotdiv', data, layout, {showSendToCloud: true});
-// };
-  
-// var innerContainer = document.querySelector('[data-num="0"'),
-//     plotEl = innerContainer.querySelector('.plot'),
-//     countrySelector = innerContainer.querySelector('.countrydata');
-
-// function assignOptions(textArray, selector) {
-//   for (var i = 0; i < textArray.length;  i++) {
-//       var currentOption = document.createElement('option');
-//       currentOption.text = textArray[i];
-//       selector.appendChild(currentOption);
-//   }
-// }
-
-// assignOptions(listofCountries, countrySelector);
-
-// function updateCountry(){
-//     setBubblePlot(countrySelector.value);
-// }
-  
-// countrySelector.addEventListener('change', updateCountry, false);
-
-// Scatter Plot
-
 function setScatterPlot(chosenJob) {
     getJobData(chosenJob);  
 
@@ -370,48 +178,6 @@ function setBarChart(chosenJob) {
 }
 });
 
-// function setBubblePlot(chosenCountry) {
-//     getCountryData(chosenCountry);  
-
-//     var trace1 = {
-//       x: currentYear,
-//       y: currentSalaries,
-//       mode: 'lines+markers',
-//       marker: {
-//         size: 12, 
-//         opacity: 0.5
-//       }
-//     };
-
-//     var data = [trace1];
-
-//     var layout = {
-//       title: 'Salaries per cap according to Country<br>'+ chosenCountry + ' Salary'
-//     };
-
-//     Plotly.newPlot('plotdiv', data, layout, {showSendToCloud: true});
-// };
-  
-// var innerContainer = document.querySelector('[data-num="0"'),
-//     plotEl = innerContainer.querySelector('.plot'),
-//     countrySelector = innerContainer.querySelector('.countrydata');
-
-// function assignOptions(textArray, selector) {
-//   for (var i = 0; i < textArray.length;  i++) {
-//       var currentOption = document.createElement('option');
-//       currentOption.text = textArray[i];
-//       selector.appendChild(currentOption);
-//   }
-// }
-
-// assignOptions(listofCountries, countrySelector);
-
-// function updateCountry(){
-//     setBubblePlot(countrySelector.value);
-// }
-  
-// countrySelector.addEventListener('change', updateCountry, false);
-
 let pivot = new Flexmonster({
   container: "pivot-container",
   componentFolder: "https://cdn.flexmonster.com/",
@@ -420,7 +186,7 @@ let pivot = new Flexmonster({
   toolbar: true,
   report: {
     dataSource: {
-      filename: "https://raw.githubusercontent.com/kealvarez/project3/main/resources/CleanFullTimeData%20copy.csv"
+      filename: "https://github.com/kealvarez/project3/blob/main/resources/DataScience_DataAnalysist.csv"
     },
     slice: {
       rows: [{
