@@ -186,7 +186,7 @@ let pivot = new Flexmonster({
   toolbar: true,
   report: {
     dataSource: {
-      filename: "https://github.com/kealvarez/project3/blob/main/resources/DataScience_DataAnalysist.csv"
+      filename: "https://raw.githubusercontent.com/kealvarez/project3/main/resources/DataScience_DataAnalysist.csv"
     },
     slice: {
       rows: [{
